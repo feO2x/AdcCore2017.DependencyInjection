@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>File Class</Title>
+      <Shortcut>File</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public static class File
+    {
+        private static StreamWriter _streamWriter;
+
+        public static void Initialize(string path)
+        {
+            _streamWriter = new StreamWriter(path);
+        }
+
+        public static void Write(char character)
+        {
+            _streamWriter.Write(character);
+        }
+
+        public static void Dispose()
+        {
+            _streamWriter?.Dispose();
+            _streamWriter = null;
+        }
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+  
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Copy Implementation v1</Title>
+      <Shortcut>CopyV1</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[while (true)
+            {
+                var characterInfo = Console.ReadKey(true);
+                if (characterInfo.Key == ConsoleKey.Escape)
+                    return;
+
+                Console.Write(characterInfo.KeyChar);
+            }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Target Enum</Title>
+      <Shortcut>TargetEnum</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public enum Target
+    {
+        Console,
+        File
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Copy v2</Title>
+      <Shortcut>CopyV2</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public static void Copy(Target target)
+        {
+            if (target == Target.File)
+                File.Initialize("text.txt");
+
+            while (true)
+            {
+                var characterInfo = Console.ReadKey(true);
+                if (characterInfo.Key == ConsoleKey.Escape)
+                    break;
+
+                if(target == Target.Console)
+                    Console.Write(characterInfo.KeyChar);
+                else if (target == Target.File)
+                    File.Write(characterInfo.KeyChar);
+            }
+
+            if (target == Target.File)
+                File.Dispose();
+        }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>IReader</Title>
+      <Shortcut>IReader</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public interface IReader
+    {
+        ConsoleKeyInfo Read();
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>ConsoleReader v1</Title>
+      <Shortcut>ConsoleReaderV1</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public sealed class ConsoleReader : IReader
+    {
+        public ConsoleKeyInfo Read()
+        {
+            return Console.ReadKey(true);
+        }
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>IWriter</Title>
+      <Shortcut>IReader</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public interface IWriter
+    {
+        void Write(char character);
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>ConsoleWriter</Title>
+      <Shortcut>ConsoleWriter</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public sealed class ConsoleWriter : IWriter
+    {
+        public void Write(char character)
+        {
+            Console.Write(character);
+        }
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>FileWriter</Title>
+      <Shortcut>FileWriter</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public sealed class FileWriter : IWriter, IDisposable
+    {
+        private readonly StreamWriter _streamWriter;
+
+        public FileWriter(string filePath)
+        {
+            _streamWriter = new StreamWriter(filePath);
+        }
+
+        public void Write(char character)
+        {
+            
+        }
+
+        public void Dispose()
+        {
+            _streamWriter.Dispose();
+        }
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Copy v3</Title>
+      <Shortcut>CopyV3</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public static void Copy()
+        {
+            IReader reader;
+            IWriter writer;
+
+            while (true)
+            {
+                var readResult = reader.Read();
+                if (readResult.Key == ConsoleKey.Escape)
+                    return;
+
+                writer.Write(readResult.KeyChar);
+            }
+        }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>ReadResult</Title>
+      <Shortcut>ReadResult</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public struct ReadResult
+    {
+        public readonly char Character;
+        public readonly bool ShouldQuit;
+
+        public ReadResult(char character, bool shouldQuit)
+        {
+            Character = character;
+            ShouldQuit = shouldQuit;
+        }
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>CopyProcess</Title>
+      <Shortcut>CopyProcess</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[public sealed class CopyProcess
+    {
+        private readonly IReader _reader;
+        private readonly IWriter _writer;
+
+        public CopyProcess(IReader reader, IWriter writer)
+        {
+            _reader = reader ?? throw new ArgumentNullException(nameof(reader));
+            _writer = writer ?? throw new ArgumentNullException(nameof(writer));
+        }
+
+        public void Copy()
+        {
+            while (true)
+            {
+                var readResult = _reader.Read();
+                if (readResult.ShouldQuit)
+                    return;
+
+                _writer.Write(readResult.Character);
+            }
+        }
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>DI Container Composition Root</Title>
+      <Shortcut>ContainerCompositionRoot</Shortcut>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[var container = new ServiceContainer();
+            container.Register<CopyProcess>()
+                     .Register<IReader, ConsoleReader>()
+                     .Register<IWriter, ConsoleWriter>();]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
