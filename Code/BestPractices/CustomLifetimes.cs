@@ -13,9 +13,9 @@ namespace BestPractices
         {
             var container = new ServiceContainer();
             container.Register<ConcurrentSpy>(new PerThreadLifetime());
-            void ResolveD() => container.GetInstance<ConcurrentSpy>();
-            var thread1 = new Thread(ResolveD);
-            var thread2 = new Thread(ResolveD);
+            void ResolveSpy() => container.GetInstance<ConcurrentSpy>();
+            var thread1 = new Thread(ResolveSpy);
+            var thread2 = new Thread(ResolveSpy);
 
             thread1.Start();
             thread2.Start();
